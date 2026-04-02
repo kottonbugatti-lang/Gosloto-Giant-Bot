@@ -231,7 +231,7 @@ def run():
 
 # ================= SAFE LOOP =================
         if __name__ == "__main__":
-    try:
-        run()
-    except Exception as e:
-        logging.error(f"Runtime error: {e}")
+        try:
+            run()
+        except Exception as e:
+            logging.error(f"Runtime error: {e}")
