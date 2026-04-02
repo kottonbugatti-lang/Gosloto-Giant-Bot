@@ -230,7 +230,7 @@ def run():
         print(f"{i}: {t} 🔥 {confidence(t, scores)}%")
 
 # ================= SAFE LOOP =================
-    if __name__ == "__main__":
+        if __name__ == "__main__":
     try:
         run()
     except Exception as e:
