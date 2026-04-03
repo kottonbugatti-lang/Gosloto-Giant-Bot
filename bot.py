@@ -90,7 +90,7 @@ def delta_patterns(history):
     for draw in history:
         for i in range(len(draw)-1):
             deltas[draw[i+1] - draw[i]] += 1
-    return deltas.most_common(10)  # FIXED
+    return deltas.most_common(10)
 
 # ================= PAIRS/TRIPLETS =================
 def pair_triplet(history):
@@ -101,7 +101,7 @@ def pair_triplet(history):
         for t in combinations(d, 3):
             triplets[t] += 1
 
-    return pairs.most_common(50), triplets.most_common(30)  # FIXED
+    return pairs.most_common(50), triplets.most_common(30)
 
 # ================= ML ADAPTIVE WEIGHTS =================
 def adaptive_weights(freq):
@@ -137,17 +137,14 @@ def score_numbers(history):
         if n in cross:
             score += weights["cross"]
 
-        # FIXED DELTA
         for d in top_deltas:
             if any(abs(n - x) == d for x in last):
                 score += 2
 
-        # FIXED PAIRS
         for p, c in top_pairs:
             if n in p:
                 score += c * 0.2
 
-        # FIXED TRIPLETS
         for t, c in top_triplets:
             if n in t:
                 score += c * 0.1
@@ -159,8 +156,6 @@ def score_numbers(history):
 # ================= POOL =================
 def build_pool(scores):
     ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-
-    # Adaptive pool size
     pool_size = BASE_POOL_SIZE + random.choice([0, 1])
     return sorted([n for n, _ in ranked[:pool_size]])
 
@@ -191,7 +186,6 @@ def generate(pool):
         if len(tickets) >= MAX_TICKETS:
             break
 
-    # fallback
     while len(tickets) < MAX_TICKETS:
         t = sorted(random.sample(pool, DRAW_SIZE))
         if valid(t) and is_diverse(t, tickets):
@@ -230,8 +224,8 @@ def run():
         print(f"{i}: {t} 🔥 {confidence(t, scores)}%")
 
 # ================= SAFE LOOP =================
-       if __name__ == "__main__":
-        try:
-            run()
-        except Exception as e:
-            logging.error(f"Runtime error: {e}
+if __name__ == "__main__":
+    try:
+        run()
+    except Exception as e:
+        logging.error(f"Runtime error: {e}")
